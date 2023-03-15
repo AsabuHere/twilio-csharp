@@ -44,19 +44,9 @@ jobs:
         with:
           dotnet-version: '3.1.x'
 
-      # The expression strips off the shortest match from the front of the string to yield just the tag name as the output
-      - name: Get tagged version
-        run: echo "GITHUB_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
-      - name: Create GitHub Release
-        uses: sendgrid/dx-automator/actions/release@main
-        with:
-          footer: '**[NuGet](https://www.nuget.org/packages/Twilio/${version})**'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
       - name: Publish package to NuGet
         run: |
           make release
-          dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+          touch test.nupkg
+          dotnet nuget push test.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
