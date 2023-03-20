@@ -55,5 +55,5 @@ jobs:
       - name: Publish package to NuGet
         run: |
           make release
-          mv **/*.nupkg testnuget.nupkg
-          dotnet nuget push testnuget.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+          dotnet nuget sign **/*.nupkg --certificate-path .github/nuget/TwilioCLISigningCertificate.pfx --certificate-password ${{ secrets.NUGET_SIGNING_KEY }}
+          dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
