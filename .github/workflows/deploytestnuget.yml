@@ -42,7 +42,7 @@ jobs:
      - name: Upload Artifact
        uses: actions/upload-artifact@v3
        with:
-         name: certificate
+         name: certificate.pfx
          path: certificate\certificate.pfx
          retention-days: 1
         
@@ -55,7 +55,7 @@ jobs:
       - name: Download code signing certificate
         uses: actions/download-artifact@v3
         with:
-          name: certificate
+          name: certificate.pfx
           
       - name: Checkout twilio-csharp
         uses: actions/checkout@v3
@@ -70,6 +70,6 @@ jobs:
       - name: Publish package to NuGet
         run: |
          make release
-         dotnet nuget sign **/*.nupkg --certificate-path certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
+         dotnet nuget sign **/*.nupkg --certificate-path /home/runner/work/twilio-csharp/twilio-csharp/certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
           
         
