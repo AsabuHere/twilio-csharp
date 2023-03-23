@@ -70,6 +70,7 @@ jobs:
       - name: Publish package to NuGet
         run: |
          make release
-         dotnet nuget sign **/*.nupkg --certificate-path /home/runner/work/twilio-csharp/twilio-csharp/certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
+         ls
+         dotnet nuget sign **/*.nupkg --certificate-path certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
           
         
