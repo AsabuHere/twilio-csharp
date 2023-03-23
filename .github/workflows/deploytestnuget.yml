@@ -44,7 +44,7 @@ jobs:
        with:
          name: certificate.pfx
          path: certificate\certificate.pfx
-         retention-days: 1
+         retention-days: 3
         
 
   deploy:
