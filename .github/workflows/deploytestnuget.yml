@@ -44,16 +44,14 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '3.1.x'
-      
-#       - name: Create GitHub Release
-#         uses: sendgrid/dx-automator/actions/release@main
-#         with:
-#           footer: '**[NuGet](https://www.nuget.org/packages/AthiraSabu/${version})**'
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: import certificate
+        run: |
+         New-Item -ItemType directory -Path certificate
+         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
+         certutil -decode certificate\certificate.txt certificate\certificate.pfx
 
       - name: Publish package to NuGet
         run: |
           make release
-          dotnet nuget sign **/*.nupkg --certificate-path .github/nuget/TwilioCLISigningCertificate.pfx --certificate-password ${{ secrets.NUGET_SIGNING_KEY }}
-          dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+          dotnet nuget sign **/*.nupkg --certificate-path .github/nuget/TwilioCLISigningCertificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
