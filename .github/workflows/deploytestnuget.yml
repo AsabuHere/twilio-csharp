@@ -71,6 +71,7 @@ jobs:
         run: |
          make release
          ls
-         dotnet nuget sign **/*.nupkg --certificate-path certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
+         pwd
+         dotnet nuget sign **/*.nupkg --certificate-path twilio-csharp/certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
           
         
