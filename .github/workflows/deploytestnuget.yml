@@ -52,15 +52,15 @@ jobs:
     needs: [ test, import-certificate ]
     runs-on: ubuntu-latest
     steps:
-      - name: Download code signing certificate
-        uses: actions/download-artifact@v3
-        with:
-          name: certificate.pfx
-          
       - name: Checkout twilio-csharp
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          
+      - name: Download code signing certificate
+        uses: actions/download-artifact@v3
+        with:
+          name: certificate.pfx
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3
