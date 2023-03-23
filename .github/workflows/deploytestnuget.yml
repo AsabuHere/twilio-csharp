@@ -30,7 +30,6 @@ jobs:
         run: make test
         
   import-certificate:
-    needs: [deploy]
     runs-on: windows-latest
     steps:
      - uses: actions/checkout@v2
