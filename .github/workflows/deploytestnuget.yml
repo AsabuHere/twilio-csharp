@@ -72,6 +72,6 @@ jobs:
          make release
          ls
          pwd
-         dotnet nuget sign **/*.nupkg --certificate-path certificate\certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
+         dotnet nuget sign **/*.nupkg --certificate-path certificate.pfx --certificate-password ${{ secrets.CERTIFICATE_PASSWORD }} --timestamper http://timestamp.digicert.com
           
         
