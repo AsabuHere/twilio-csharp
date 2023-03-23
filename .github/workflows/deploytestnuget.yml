@@ -45,7 +45,7 @@ jobs:
         with:
           dotnet-version: '3.1.x'
           
-  sign-and-publish-nuget:
+  import-certificate:
     needs: [deploy]
     runs-on: windows-latest
     steps:
@@ -57,6 +57,10 @@ jobs:
         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
         certutil -decode certificate\certificate.txt certificate\certificate.pfx
         
+  sign-and-publish-package:
+    needs: [deploy, import-certificate]
+    runs-on: ubuntu-latest
+    steps:
      - name: Publish package to NuGet
        run: |
          make release
